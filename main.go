@@ -49,12 +49,15 @@ func test() {
 		if err != nil {
 			fmt.Println("Error reading file: ", err)
 		}
-		defer f.Close()
 
 		buffer := make([]byte, 8)
 		_, err = f.Read(buffer)
 		if err != nil {
 			fmt.Println("Error reading file: ", err)
+		}
+		err = f.Close()
+		if err != nil {
+			fmt.Println("Error closing file: ", err)
 		}
 		number := binary.BigEndian.Uint64(buffer)
 		encoded := encode(number)
@@ -63,6 +66,7 @@ func test() {
 		fmt.Printf("Decoded value: %d\n", decoded)
 		fmt.Println("Roundtrip test: ", number == decoded)
 		fmt.Println("---------------------------------")
+
 	}
 	fmt.Println("**** Test Complete ****")
 
