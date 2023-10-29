@@ -6,28 +6,20 @@ import (
 	"os"
 )
 
-// Read the test files correctly
-// hexdump to see the bytes
-// interpret the bytes as integers
-// encode the integers as protobuf
-// decode the protobuf as integers
-// roundtrip test using encode and decode
-//
-//	refactor
 func main() {
 	test()
 }
 func encode(num uint64) []byte {
-	var bits []byte
+	var b []byte
 	for num > 0 {
 		p := num & 0x7f
 		num >>= 7
 		if num > 0 {
 			p |= 0x80
 		}
-		bits = append(bits, byte(p))
+		b = append(b, byte(p))
 	}
-	return bits
+	return b
 }
 
 func decode(b []byte) uint64 {
